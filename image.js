@@ -10,6 +10,9 @@ function add() {
     image.src = $("url").value;
     console.log(image.src);
     image.className = "image";
+    // Image tag is created, then added inside blank area.
+    // the tag is removed when the image fails to load.
+    // Causes an undesired effect on the tag.
     image.onerror = function() {
         this.remove();
     };
