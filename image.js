@@ -6,22 +6,27 @@ window.onload = function() {
 };
 
 function add() {
-    var image = document.createElement("img");
-    image.src = $("url").value;
-    console.log(image.src);
-    image.className = "image";
+    if (imageExists($("url").value)) {
+        console.log("image exists in the blank area");
+    } else {
+        var image = document.createElement("img");
+        image.src = $("url").value;
+        console.log(image.src);
+        image.className = "image";
 
-    // MouseHover
-    image.observe("mouseover", zoomIn);
-    image.observe("mouseout", zoomOut)
+        // MouseHover
+        image.observe("mouseover", zoomIn);
+        image.observe("mouseout", zoomOut)
 
-    // Image tag is created, then added inside blank area.
-    // the tag is removed when the image fails to load.
-    // Causes an undesired effect on the tag.
-    image.onerror = function() {
-        this.remove();
-    };
-    $("blank_area").appendChild(image);
+        // Image tag is created, then added inside blank area.
+        // the tag is removed when the image fails to load.
+        // Causes an undesired effect on the tag.
+        image.onerror = function() {
+            this.remove();
+        };
+        $("blank_area").appendChild(image);
+    }
+    
 
 }
 
@@ -36,8 +41,7 @@ function zoomIn() {
             originalWidth: 500
         },
         scaleFromCenter: true
-    })
-    console.log(this);
+    });
 }
 
 function zoomOut() {
@@ -47,7 +51,22 @@ function zoomOut() {
             originalWidth: 100
         },
         scaleFromCenter: true
-    })
-    console.log(this);
+    });
+}
+
+function imageExists(imageUrl) {
+    var images = $$(".image");
+
+    var imageExist = false;
+    // todo: find the better solution.
+    var dummyImage = document.createElement("img");
+    dummyImage.src = imageUrl;
+    for (var i = 0; i < images.length; i++) {
+        if (images[i].src = dummyImage.src) {
+            imageExist = true;
+            break;
+        }
+    }
+    return imageExist;
 }
 
