@@ -28,6 +28,7 @@ function add() {
         // Causes an undesired effect on the tag.
         images[current_index].onerror = function() {
             this.remove();
+            images.pop();
         };
 
         $("blank_area").appendChild(images[current_index]);
@@ -59,20 +60,20 @@ function zoomOut() {
 }
 
 function imageExists(imageUrl) {
-    console.log($("blank_area").childElements());
-    // var images = $$(".image");
-
-    // var imageExist = false;
-    // // todo: find the better solution.
-    // var dummyImage = document.createElement("img");
-    // dummyImage.src = imageUrl;
-    // for (var i = 0; i < images.length; i++) {
-    //     if (images[i].src = dummyImage.src) {
-    //         imageExist = true;
-    //         break;
-    //     }
-    // }
-    // return imageExist;
-    return false;
+    var existing_images = $("blank_area").childElements();
+    var len = existing_images.length;
+    var imageExist = false;
+    if (len < 1) {
+        return false;
+    }
+    var dummyImage = document.createElement("img");
+    dummyImage.src = imageUrl;
+    for (var i = 0; i < len; i++) {
+        if (existing_images[i].src == dummyImage.src) {
+            imageExist = true;
+            break;
+        }
+    }
+    return imageExist;
 }
 
