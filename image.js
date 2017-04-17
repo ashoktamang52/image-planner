@@ -36,7 +36,23 @@ function add() {
 }
 
 function remove() {
-    alert("delete");
+    var existing_images = $("blank_area").childElements();
+    var len = existing_images.length;
+    var imageExist = false;
+    if (len > 0) {
+        var dummyImage = document.createElement("img");
+        dummyImage.src = $("url").value;
+        for (var i = 0; i < len; i++) {
+            if (existing_images[i].src == dummyImage.src) {
+                existing_images[i].remove();
+                imageExist = true;
+                break;
+            }
+        }
+    };
+    if (!imageExist) {
+        console.log("Remove error!");
+    }
 }
 
 function zoomIn() {
