@@ -32,6 +32,7 @@ function add() {
         };
 
         $("blank_area").appendChild(images[current_index]);
+        $("url").clear();
     }
 }
 
