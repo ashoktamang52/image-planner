@@ -51,6 +51,7 @@ function remove() {
             if (existing_images[i].src == dummyImage.src) {
                 existing_images[i].remove();
                 imageExist = true;
+                $("url").clear();
                 break;
             }
         }
@@ -103,6 +104,7 @@ function error_message(message) {
     var log = document.createElement("p");
     log.innerHTML = message;
     $('control').appendChild(log);
+    $("url").clear();
     
 }
 
@@ -114,6 +116,7 @@ function reset_error_message() {
 }
 
 function showImageUrl() {
-    $("url").value = this.src;
+    var image_name = this.src.split('/').pop();
+    $("url").value = image_name;
 }
 
