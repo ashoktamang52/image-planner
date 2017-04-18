@@ -31,7 +31,7 @@ function add() {
         images[current_index].onerror = function() {
             this.remove();
             images.pop();
-            error_message("Image URL is invalid");
+            error_message("Image URL is invalid.");
         };
 
         $("blank_area").appendChild(images[current_index]);
