@@ -8,9 +8,10 @@ window.onload = function() {
 };
 
 function add() {
+    reset_error_message();
     var images = window.images;
     if (imageExists($("url").value)) {
-        console.log("already!");
+        error_message("Image already exists.");
     } else {
         // Create a img node and append it to global images array
         images.push(document.createElement("img"));
@@ -19,9 +20,10 @@ function add() {
         images[current_index].src = $("url").value;
         images[current_index].className = "image";
 
-        // MouseHover
+        // mouse events
         images[current_index].observe("mouseover", zoomIn);
         images[current_index].observe("mouseout", zoomOut)
+        images[current_index].onclick = showImageUrl;
 
         // Image tag is created, then added inside blank area.
         // the tag is removed when the image fails to load.
@@ -29,6 +31,7 @@ function add() {
         images[current_index].onerror = function() {
             this.remove();
             images.pop();
+            error_message("Image URL is invalid");
         };
 
         $("blank_area").appendChild(images[current_index]);
@@ -37,6 +40,7 @@ function add() {
 }
 
 function remove() {
+    reset_error_message();
     var existing_images = $("blank_area").childElements();
     var len = existing_images.length;
     var imageExist = false;
@@ -52,7 +56,7 @@ function remove() {
         }
     };
     if (!imageExist) {
-        console.log("Remove error!");
+        error_message("Image Url is invalid or No Image in the blank area.");
     }
 }
 
@@ -92,5 +96,24 @@ function imageExists(imageUrl) {
         }
     }
     return imageExist;
+}
+
+function error_message(message) {
+    console.log("goes here?");
+    var log = document.createElement("p");
+    log.innerHTML = message;
+    $('control').appendChild(log);
+    
+}
+
+function reset_error_message() {
+    var log = document.querySelector("div > p");
+    if (log != null) {
+        log.remove();
+    }
+}
+
+function showImageUrl() {
+    $("url").value = this.src;
 }
 
